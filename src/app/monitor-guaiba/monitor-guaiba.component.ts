@@ -5,6 +5,7 @@ import { SBDescriptionComponent } from '../common/dp.pomponent';
 import { SBActionDescriptionComponent } from '../common/adp.component';
 import { SaladesituacaoServiceService } from '../saladesituacao-service.service';
 import { GuaibaInfo } from '../models/guaiba-info';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-monitor-guaiba',
@@ -12,10 +13,11 @@ import { GuaibaInfo } from '../models/guaiba-info';
   templateUrl: './monitor-guaiba.component.html',
   styleUrl: './monitor-guaiba.component.css',
   providers: [SaladesituacaoServiceService],
-  imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent]
+  imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule]
 })
 export class MonitorGuaibaComponent implements OnInit{
   public guaibaData: GuaibaInfo[] = [];
+
   public primaryXAxis: Object = {
     valueType: 'DateTime',
     textStyle: { 
@@ -23,7 +25,7 @@ export class MonitorGuaibaComponent implements OnInit{
     },
     edgeLabelPlacement: 'Shift',
     majorGridLines: { width: 0 },
-    labelFormat: 'd/M/y hh:mm'
+    labelFormat: 'd/M/y HH:mm'
 };
 
 public primaryYAxis: Object = {
@@ -70,6 +72,7 @@ public load(args: ILoadedEventArgs): void {
 public title: string = 'Nivel Guaiba';
 
 constructor(private saladesituacaoServiceService: SaladesituacaoServiceService) {};
+
 parseData(jsonData: any){
   for (const k in jsonData){
     const data = new GuaibaInfo(new Date(jsonData[k].date),
