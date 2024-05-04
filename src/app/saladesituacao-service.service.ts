@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const httpOptions = {
@@ -12,9 +12,10 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class SaladesituacaoServiceService {
+  private http = inject(HttpClient)
   private baseUrl = 'https://saladesituacao.rs.gov.br/api/station/ana/87450004';
 
-  constructor(private http: HttpClient) {}
+  constructor() {}
 
   guaibaData() {
     return this.http.get(this.baseUrl, httpOptions);
