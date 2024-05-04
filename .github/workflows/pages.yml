@@ -5,6 +5,15 @@ on:
     branches:
     - master
 
+permissions:
+    actions: read
+    checks: read
+    contents: read
+    deployments: read
+    id-token: write
+    issues: read     
+    pull-requests: read
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
