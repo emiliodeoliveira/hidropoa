@@ -18,6 +18,9 @@ export class MonitorGuaibaComponent implements OnInit{
   public guaibaData: GuaibaInfo[] = [];
   public primaryXAxis: Object = {
     valueType: 'DateTime',
+    textStyle: { 
+      fontFamily: 'Segoe UI'
+    },
     edgeLabelPlacement: 'Shift',
     majorGridLines: { width: 0 },
     labelFormat: 'd/M/y'
@@ -29,6 +32,9 @@ public primaryYAxis: Object = {
     maximum: 600,
     interval: 100,
     lineStyle: { width: 0 },
+    textStyle: { 
+      fontFamily: 'Segoe UI'
+    }, 
     majorTickLines: { width: 0 }
 };
 public chartArea: Object = {
@@ -48,22 +54,23 @@ public tooltip: Object = {
 };
 public legend: Object = {
     visible: true,
-    enableHighlight : true
+    enableHighlight : true,
+    textStyle: { 
+      fontFamily: 'Segoe UI'
+    }, 
 }
-// custom code start
+
 public load(args: ILoadedEventArgs): void {
     let selectedTheme: string = location.hash.split('/')[1];
     selectedTheme = selectedTheme ? selectedTheme : 'Material';
     args.chart.theme = <ChartTheme>(selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast');
 };
-// custom code end
-public title: string = 'Nivel Guaiba';
 
+public title: string = 'Nivel Guaiba';
 
 constructor(private saladesituacaoServiceService: SaladesituacaoServiceService) {};
 parseData(jsonData: any){
   for (const k in jsonData){
-
     const data = new GuaibaInfo(new Date(jsonData[k].date),
     jsonData[k].precipitation,
     jsonData[k].river_flow_rate,
@@ -74,11 +81,9 @@ parseData(jsonData: any){
 }
 
 ngOnInit(){
-  const dt = new GuaibaInfo(new Date(2012, 6, 1),1,1,1,22)
   this.saladesituacaoServiceService.guaibaData().subscribe(
     data => {
       this.parseData(data)
-      console.log(this.guaibaData)
     }
   )}
 
