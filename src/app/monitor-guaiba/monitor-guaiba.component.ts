@@ -31,8 +31,8 @@ export class MonitorGuaibaComponent implements OnInit{
 public primaryYAxis: Object = {
     title: 'Metros',
     minimum: 0,
-    maximum: 600,
-    interval: 100,
+    maximum: 10,
+    interval: 1,
     lineStyle: { width: 0 },
     textStyle: { 
       fontFamily: 'Segoe UI'
@@ -78,7 +78,7 @@ parseData(jsonData: any){
     const data = new GuaibaInfo(new Date(jsonData[k].date),
     jsonData[k].precipitation,
     jsonData[k].river_flow_rate,
-    jsonData[k].river_level,
+    (jsonData[k].river_level/100),
     jsonData[k].station_id)
     this.guaibaData.push(data)
   }   
