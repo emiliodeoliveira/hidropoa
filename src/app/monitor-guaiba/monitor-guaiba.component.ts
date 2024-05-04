@@ -23,7 +23,7 @@ export class MonitorGuaibaComponent implements OnInit{
     },
     edgeLabelPlacement: 'Shift',
     majorGridLines: { width: 0 },
-    labelFormat: 'd/M/y'
+    labelFormat: 'd/M/y hh:mm'
 };
 
 public primaryYAxis: Object = {
@@ -36,6 +36,7 @@ public primaryYAxis: Object = {
       fontFamily: 'Segoe UI'
     }, 
     majorTickLines: { width: 0 }
+    
 };
 public chartArea: Object = {
     border: {
