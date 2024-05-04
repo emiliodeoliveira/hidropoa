@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -10,6 +10,10 @@ import { BrowserModule } from '@angular/platform-browser';
     BrowserModule,
     CommonModule,
     HttpClientModule
-  ]
+    
+  ],
+    // providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }

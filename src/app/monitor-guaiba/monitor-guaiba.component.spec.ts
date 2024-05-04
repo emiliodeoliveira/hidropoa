@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MonitorGuaibaComponent } from './monitor-guaiba.component';
+import { FormsModule } from '@angular/forms';
 
 describe('MonitorGuaibaComponent', () => {
   let component: MonitorGuaibaComponent;
@@ -8,7 +9,7 @@ describe('MonitorGuaibaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MonitorGuaibaComponent]
+      imports: [MonitorGuaibaComponent,FormsModule]
     })
     .compileComponents();
     
