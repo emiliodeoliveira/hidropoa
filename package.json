@@ -8,7 +8,7 @@
     "build:prod": "ng build --configuration production --base-href https://emiliodeoliveira.github.io/monitora-porto-alegre/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:monitor-porto-alegre": "node dist/monitor-porto-alegre/server/server.mjs"
+    "serve:ssr:monitor-porto-alegre": "node dist/monitora-porto-alegre/server/server.mjs"
   },
   "private": true,
   "dependencies": {

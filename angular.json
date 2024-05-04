@@ -62,10 +62,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "monitor-porto-alegre:build:production"
+              "buildTarget": "monitora-porto-alegre:build:production"
             },
             "development": {
-              "buildTarget": "monitor-porto-alegre:build:development"
+              "buildTarget": "monitora-porto-alegre:build:development"
             }
           },
           "defaultConfiguration": "development"
