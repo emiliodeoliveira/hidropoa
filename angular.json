@@ -73,7 +73,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "monitor-porto-alegre:build"
+            "buildTarget": "monitora-porto-alegre:build"
           }
         },
         "test": {

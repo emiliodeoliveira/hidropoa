@@ -10,5 +10,5 @@ import { MonitorGuaibaComponent} from './monitor-guaiba/monitor-guaiba.component
   styleUrl: './app.component.css'
 })
 export class AppComponent {
-  title = 'monitor-porto-alegre';
+  title = 'monitora-porto-alegre';
 }
