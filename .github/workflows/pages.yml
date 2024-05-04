@@ -22,10 +22,11 @@ jobs:
       run: npm install
 
     - name: Upload artifact
-      uses: actions/upload-pages-artifact@v2
+      uses: actions/upload-pages-artifact@3.0.1
       with:
         name: 'github-pages'
-        path: 'dist'
+        path: $dist
+        if-no-files-found: error
 
 
   deploy:
