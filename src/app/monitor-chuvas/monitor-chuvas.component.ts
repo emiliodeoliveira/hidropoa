@@ -72,7 +72,7 @@ public load(args: ILoadedEventArgs): void {
     args.chart.theme = <ChartTheme>(selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast');
 };
 
-public title: string = 'Nivel Guaiba';
+public title: string = 'Porto Alegre';
 
 constructor(private saladesituacaoServiceService: SaladesituacaoServiceService) {};
 
