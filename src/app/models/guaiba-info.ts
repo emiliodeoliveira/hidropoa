@@ -1,5 +1,5 @@
 export class GuaibaInfo{
-    private date:Date;
+    public date: Date;
     private precipitation: number;
     private river_flow_rate: number;
     private river_level: number;
@@ -11,5 +11,15 @@ export class GuaibaInfo{
         this.river_flow_rate = river_flow_rate;
         this.river_level = river_level;
         this.station_id = station_id
+    }
+
+    getDate(){
+        return this.date
+    }
+    getRiverLevel(){
+        return this.river_level
+    }
+    getPrecipitationValue(){
+        return this.precipitation
     }
 }
