@@ -1,4 +1,4 @@
-  import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
+  import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
   import { ILoadedEventArgs, ChartTheme, ChartAllModule } from '@syncfusion/ej2-angular-charts';
   import { Browser } from '@syncfusion/ej2-base';
   import { SBDescriptionComponent } from '../common/dp.pomponent';
@@ -7,6 +7,14 @@
   import { GuaibaInfo } from '../models/guaiba-info';
   import { FormsModule } from '@angular/forms';
   import { CommonModule } from '@angular/common';
+  import {MatInputModule} from '@angular/material/input';
+  import {MatSelectModule} from '@angular/material/select';
+  import {MatFormFieldModule} from '@angular/material/form-field';
+  
+  interface Day {
+    value: number;
+    viewValue: string;
+  }
 
   @Component({
     selector: 'app-monitor-guaiba',
@@ -14,18 +22,20 @@
     templateUrl: './monitor-guaiba.component.html',
     styleUrl: './monitor-guaiba.component.css',
     providers: [SaladesituacaoServiceService],
-    imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule, CommonModule]
+    imports: [MatFormFieldModule, MatSelectModule, MatInputModule, SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule, CommonModule]
   })
   export class MonitorGuaibaComponent implements OnInit{
-
-    private riverDataService = inject(SaladesituacaoServiceService)
-
+    days: Day[] = [
+      {value: 7, viewValue: '7 dias'},
+      {value: 1, viewValue: '24 horas'}
+    ];
+    
+    @Input() selectedDaysInterval: number = 7
+    public riverDataService = inject(SaladesituacaoServiceService)
     public guaibaRiverData: GuaibaInfo[] = [];
-    public dateValue = new Date();
-    
-    
-    public lastRiverDate: Date = new Date()
-    public lastRiverValue: number = 0
+    public dateValue = new Date(); 
+    public lastRiverDate: Date = new Date();
+    public lastRiverValue: number = 0;
 
     public primaryXAxis: Object = {
       valueType: 'DateTime',
@@ -71,6 +81,7 @@
         fontFamily: 'Segoe UI'
       }, 
   }
+  
 
   public load(args: ILoadedEventArgs): void {
       let selectedTheme: string = location.hash.split('/')[1];
@@ -83,7 +94,7 @@
   constructor(private saladesituacaoServiceService: SaladesituacaoServiceService) {};
 
   parseData(jsonData: any){
-    this.dateValue.setDate(this.dateValue.getDate() - 7)
+    this.dateValue.setDate(this.dateValue.getDate() - this.selectedDaysInterval)
     for (const k in jsonData){
       const date = new Date(jsonData[k].date)
       if (date >= this.dateValue){
