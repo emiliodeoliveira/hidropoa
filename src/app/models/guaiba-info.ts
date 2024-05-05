@@ -13,7 +13,7 @@ export class GuaibaInfo{
         this.station_id = station_id
     }
 
-    getDate(){
+    getLastDate(){
         return this.date
     }
     getRiverLevel(){

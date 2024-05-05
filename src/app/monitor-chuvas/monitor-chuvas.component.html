@@ -6,7 +6,7 @@
         <ejs-chart style='display:block' align='center' id='chartcontainerchuvas' [title]='title' [primaryXAxis]='primaryXAxis' [primaryYAxis]='primaryYAxis'
             [tooltip]='tooltip' (load)='load($event)' [chartArea]='chartArea' [width]='width' [legendSettings]='legend'>
             <e-series-collection>
-                <e-series [dataSource]='guaibaData' type='Line' xName='date' yName='precipitation' name='Estação Cais Mauá C6' width=2 [marker]='circleMarker' opacity=1> </e-series>
+                <e-series [dataSource]='precipitationData' type='Line' xName='date' yName='precipitation' name='Estação Cais Mauá C6' width=2 [marker]='circleMarker' opacity=1> </e-series>
             </e-series-collection>
         </ejs-chart>
     </div>
