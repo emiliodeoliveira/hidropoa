@@ -6,6 +6,7 @@ import { SBActionDescriptionComponent } from '../common/adp.component';
 import { SaladesituacaoServiceService } from '../saladesituacao-service.service';
 import { GuaibaInfo } from '../models/guaiba-info';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-monitor-chuvas',
@@ -13,7 +14,7 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './monitor-chuvas.component.html',
   styleUrl: './monitor-chuvas.component.css',
   providers: [SaladesituacaoServiceService],
-  imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule]
+  imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule, CommonModule]
 })
 export class MonitorChuvasComponent implements OnInit{
 
@@ -65,6 +66,8 @@ public legend: Object = {
       fontFamily: 'Segoe UI'
     }, 
 }
+  lastPrecipitationDate: Date = new Date();
+  lastPrecipitationValue: number = 0;
 
 public load(args: ILoadedEventArgs): void {
     let selectedTheme: string = location.hash.split('/')[1];
@@ -93,4 +96,9 @@ ngOnInit(){
       this.parseData(data)
     }
   )}
+  getLastValues() {
+    const index = this.guaibaData.length
+    this.lastPrecipitationDate = this.guaibaData[index-1].getDate()
+    this.lastPrecipitationValue = this.guaibaData[index-1].getPrecipitationValue()
+  }
 }

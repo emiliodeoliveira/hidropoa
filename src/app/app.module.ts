@@ -3,13 +3,15 @@ import { CommonModule, HashLocationStrategy, LocationStrategy } from '@angular/c
 import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app.routes';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     CommonModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
     
   ],
     // providers: [{provide:LocationStrategy, useClass:HashLocationStrategy}],

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, inject } from '@angular/core';
 import { ILoadedEventArgs, ChartTheme, ChartAllModule } from '@syncfusion/ej2-angular-charts';
 import { Browser } from '@syncfusion/ej2-base';
 import { SBDescriptionComponent } from '../common/dp.pomponent';
@@ -6,6 +6,7 @@ import { SBActionDescriptionComponent } from '../common/adp.component';
 import { SaladesituacaoServiceService } from '../saladesituacao-service.service';
 import { GuaibaInfo } from '../models/guaiba-info';
 import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-monitor-guaiba',
@@ -13,10 +14,16 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './monitor-guaiba.component.html',
   styleUrl: './monitor-guaiba.component.css',
   providers: [SaladesituacaoServiceService],
-  imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule]
+  imports: [SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule, CommonModule]
 })
 export class MonitorGuaibaComponent implements OnInit{
+
+  private dataService = inject(SaladesituacaoServiceService)
+
   public guaibaData: GuaibaInfo[] = [];
+  public lastRiverDate: Date = new Date()
+  public lastRiverValue: number = 0
+
 
   public primaryXAxis: Object = {
     valueType: 'DateTime',
@@ -81,14 +88,20 @@ parseData(jsonData: any){
     (jsonData[k].river_level/100),
     jsonData[k].station_id)
     this.guaibaData.push(data)
-  }   
+  }
 }
 
 ngOnInit(){
-  this.saladesituacaoServiceService.guaibaData().subscribe(
+  this.dataService.guaibaData().subscribe(
     data => {
       this.parseData(data)
-    }
-  )}
+      this.getLastValues()    
+    })
+  }
 
+  getLastValues() {
+    const index = this.guaibaData.length
+    this.lastRiverDate = this.guaibaData[index-1].getDate()
+    this.lastRiverValue = this.guaibaData[index-1].getRiverLevel()
+  }
 }
