@@ -1,11 +1,11 @@
 {
   "name": "monitora-porto-alegre",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "ng build --configuration production --base-href https://emiliodeoliveira.github.io/monitora-porto-alegre/",
+    "build": "ng build --configuration production --base-href https://monitora-porto-alegre.vercel.app/",
+    "build:prod": "ng build --configuration production --base-href https://monitora-porto-alegre.vercel.app/",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:monitora-porto-alegre": "node dist/monitora-porto-alegre/server/server.mjs"
