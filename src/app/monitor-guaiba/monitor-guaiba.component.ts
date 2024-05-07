@@ -81,6 +81,7 @@
         fontFamily: 'Segoe UI'
       }, 
   }
+  haveData: boolean = false;
   
 
   public load(args: ILoadedEventArgs): void {
@@ -112,7 +113,8 @@
     this.riverDataService.guaibaData().subscribe(
       data => {
         this.parseData(data)
-        this.getLastValues()    
+        this.getLastValues()
+        this.haveData = this.guaibaRiverData.length > 0 ? true : false;    
       })
     }
 
