@@ -1,5 +1,5 @@
 <div class="control-section">
-    <div align='center'>
+    <div align='center' *ngIf="haveData">
         <h2>Atualização dos Níveis do Guaíba</h2>
         <h5>Última leitura: {{lastRiverDate |  date:"dd/MM/yyyy 'às' hh:mm a" }}</h5>
         <h5>Última nível registrado: {{lastRiverValue}} metros</h5>
@@ -10,4 +10,5 @@
             </e-series-collection>
         </ejs-chart>
     </div>
+    <div *ngIf="!haveData">Aviso! Os dados estão indisponíveis devido ao desligamento do datacenter da Procergs</div>
 </div>
