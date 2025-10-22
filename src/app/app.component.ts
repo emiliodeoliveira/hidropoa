@@ -6,9 +6,9 @@ import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/rou
   standalone: true,
   imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'monitora-porto-alegre';
+  title = 'hidropoa';
   constructor(private router: Router){}
 }

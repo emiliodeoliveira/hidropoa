@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'monitora-porto-alegre' title`, () => {
+  it(`should have the 'hidropoa' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('monitora-porto-alegre');
+    expect(app.title).toEqual('hidropoa');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, monitora-porto-alegre');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, hidropoa');
   });
 });
