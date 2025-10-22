@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "monitora-porto-alegre": {
+    "hidropoa": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/monitora-porto-alegre",
+            "outputPath": "dist/hidropoa",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -63,18 +63,18 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "monitora-porto-alegre:build:production"
+              "buildTarget": "hidropoa:build:production"
             },
             "development": {
-              "buildTarget": "monitora-porto-alegre:build:development"
+              "buildTarget": "hidropoa:build:development"
             }
           },
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
-          "options": {
-            "buildTarget": "monitora-porto-alegre:build"
+            "options": {
+            "buildTarget": "hidropoa:build"
           }
         },
         "test": {

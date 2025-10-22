@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
   standalone: true,
   imports: [],
   templateUrl: './voluntariado.component.html',
-  styleUrl: './voluntariado.component.css'
+  styleUrls: ['./voluntariado.component.css']
 })
 export class VoluntariadoComponent {
 

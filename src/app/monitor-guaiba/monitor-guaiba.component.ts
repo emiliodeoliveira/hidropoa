@@ -1,126 +1,100 @@
-  import { Component, Input, OnInit, ViewEncapsulation, inject } from '@angular/core';
-  import { ILoadedEventArgs, ChartTheme, ChartAllModule } from '@syncfusion/ej2-angular-charts';
-  import { Browser } from '@syncfusion/ej2-base';
-  import { SBDescriptionComponent } from '../common/dp.pomponent';
-  import { SBActionDescriptionComponent } from '../common/adp.component';
-  import { SaladesituacaoServiceService } from '../saladesituacao-service.service';
-  import { GuaibaInfo } from '../models/guaiba-info';
-  import { FormsModule } from '@angular/forms';
-  import { CommonModule } from '@angular/common';
-  import {MatInputModule} from '@angular/material/input';
-  import {MatSelectModule} from '@angular/material/select';
-  import {MatFormFieldModule} from '@angular/material/form-field';
+import { Component, Input, OnInit } from '@angular/core';
+import { NgChartsModule } from 'ng2-charts';
+import { SBDescriptionComponent } from '../common/dp.pomponent';
+import { SBActionDescriptionComponent } from '../common/adp.component';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import {MatInputModule} from '@angular/material/input';
+import {MatSelectModule} from '@angular/material/select';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { RiverInfo } from '../models/river-info';
+import { HidrowebService } from '../hidroweb.service';
+
+interface Day {
+  value: number;
+  viewValue: string;
+}
+
+@Component({
+  selector: 'app-monitor-guaiba',
+  standalone: true,
+  templateUrl: './monitor-guaiba.component.html',
+  styleUrls: ['./monitor-guaiba.component.css'],
+  providers: [HidrowebService],
+  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, SBActionDescriptionComponent, NgChartsModule, SBDescriptionComponent, FormsModule, CommonModule]
+})
+export class MonitorGuaibaComponent implements OnInit{
+  days: Day[] = [
+    {value: 7, viewValue: '7 dias'},
+    {value: 1, viewValue: '24 horas'}
+  ];
   
-  interface Day {
-    value: number;
-    viewValue: string;
-  }
+  @Input() selectedDaysInterval: number = 7
+  public guaibaRiverData: RiverInfo[] = [];
+  public dateValue = new Date(); 
+  public lastRiverDate: Date = new Date();
+  public lastRiverValue: number = 0;
 
-  @Component({
-    selector: 'app-monitor-guaiba',
-    standalone: true,
-    templateUrl: './monitor-guaiba.component.html',
-    styleUrl: './monitor-guaiba.component.css',
-    providers: [SaladesituacaoServiceService],
-    imports: [MatFormFieldModule, MatSelectModule, MatInputModule, SBActionDescriptionComponent, ChartAllModule, SBDescriptionComponent, FormsModule, CommonModule]
-  })
-  export class MonitorGuaibaComponent implements OnInit{
-    days: Day[] = [
-      {value: 7, viewValue: '7 dias'},
-      {value: 1, viewValue: '24 horas'}
-    ];
-    
-    @Input() selectedDaysInterval: number = 7
-    public riverDataService = inject(SaladesituacaoServiceService)
-    public guaibaRiverData: GuaibaInfo[] = [];
-    public dateValue = new Date(); 
-    public lastRiverDate: Date = new Date();
-    public lastRiverValue: number = 0;
-
-    public primaryXAxis: Object = {
-      valueType: 'DateTime',
-      textStyle: { 
-        fontFamily: 'Segoe UI'
-      },
-      edgeLabelPlacement: 'Shift',
-      majorGridLines: { width: 0 },
-      labelFormat: 'd/M/y HH:mm'
+  public width: string = '75%';
+  public haveData: boolean = false;
+  // Chart.js bindings
+  public lineChartData: any = { labels: [], datasets: [{ data: [], label: 'Estação Cais Mauá C6', fill: false, borderColor: '#3e95cd' }] };
+  public lineChartOptions: any = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: true } },
+    scales: { y: { title: { display: true, text: 'Metros' }, min: 0 } }
   };
+  datePipe: any;
 
-  public primaryYAxis: Object = {
-      title: 'Metros',
-      minimum: 0,
-      maximum: 10,
-      interval: 1,
-      lineStyle: { width: 0 },
-      textStyle: { 
-        fontFamily: 'Segoe UI'
-      }, 
-      majorTickLines: { width: 0 }
-      
-  };
-  public chartArea: Object = {
-      border: {
-          width: 0
-      }
-  };
-  public width: string = Browser.isDevice ? '100%' : '75%';
-  public circleMarker: Object = { visible: true, height: 7, width: 7 , shape: 'Circle' , isFilled: true };
-  public triangleMarker: Object = { visible: true, height: 6, width: 6 , shape: 'Triangle' , isFilled: true };
-  public diamondMarker: Object = { visible: true, height: 7, width: 7 , shape: 'Diamond' , isFilled: true };
-  public rectangleMarker: Object = { visible: true, height: 5, width: 5 , shape: 'Rectangle' , isFilled: true };
-  public pentagonMarker: Object = { visible: true, height: 7, width: 7 , shape: 'Pentagon' , isFilled: true };
 
-  public tooltip: Object = {
-      enable: true
-  };
-  public legend: Object = {
-      visible: true,
-      enableHighlight : true,
-      textStyle: { 
-        fontFamily: 'Segoe UI'
-      }, 
-  }
-  haveData: boolean = false;
-  
+public title: string = 'Nivel Guaiba';
 
-  public load(args: ILoadedEventArgs): void {
-      let selectedTheme: string = location.hash.split('/')[1];
-      selectedTheme = selectedTheme ? selectedTheme : 'Material';
-      args.chart.theme = <ChartTheme>(selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1)).replace(/-dark/i, "Dark").replace(/contrast/i, 'Contrast');
-  };
+constructor(private hidrowebService: HidrowebService) {}
 
-  public title: string = 'Nivel Guaiba';
-
-  constructor(private saladesituacaoServiceService: SaladesituacaoServiceService) {};
-
-  parseData(jsonData: any){
-    this.dateValue.setDate(this.dateValue.getDate() - this.selectedDaysInterval)
-    for (const k in jsonData){
-      const date = new Date(jsonData[k].date)
-      if (date >= this.dateValue){
-        const data = new GuaibaInfo(date,
-        jsonData[k].precipitation,
-        jsonData[k].river_flow_rate,
-        (jsonData[k].river_level/100),
-        jsonData[k].station_id)
-        this.guaibaRiverData.push(data)
-      }
+parseData(jsonData: any){
+  const cutoff = new Date();
+  cutoff.setDate(cutoff.getDate() - this.selectedDaysInterval);
+  this.guaibaRiverData = [];
+  const riverDataFiltered = Array.isArray(jsonData) ? jsonData.filter((d: any) => d.medicoes) : [];
+  for (let i = 0; i < riverDataFiltered.length; i++){
+    const item = riverDataFiltered[i];
+    if (!item) { continue; }
+    const date = new Date(item.horDataHora);
+    if (date >= cutoff) {
+      const data = new RiverInfo(date,
+        (item.horNivelAdotado/100),
+        item.horEstacao);
+      this.guaibaRiverData.push(data);
     }
   }
+}
 
-  ngOnInit(){
-    this.riverDataService.guaibaData().subscribe(
-      data => {
-        this.parseData(data)
-        this.getLastValues()
-        this.haveData = this.guaibaRiverData.length > 0 ? true : false;    
-      })
-    }
+ngOnInit(){
+  this.hidrowebService.guaibaData().subscribe(
+    (data: any) => {
+      this.parseData(data);
+      this.getLastValues();
+      this.haveData = this.guaibaRiverData.length > 0;
+      this.buildChart();
+    });
+}
 
-    getLastValues() {
-      const index = this.guaibaRiverData.length
-      this.lastRiverDate = this.guaibaRiverData[index-1].getLastDate()
-      this.lastRiverValue = this.guaibaRiverData[index-1].getRiverLevel()
-    }
+getLastValues() {
+  const index = this.guaibaRiverData.length;
+  if (index === 0) { return; }
+  this.lastRiverDate = this.guaibaRiverData[index-1].getLastDate();
+  this.lastRiverValue = this.guaibaRiverData[index-1].getRiverLevel();
+}
+
+buildChart(){
+  const labels: string[] = [];
+  const values: number[] = [];
+  for (let i = 0; i < this.guaibaRiverData.length; i++){
+    const item = this.guaibaRiverData[i];
+    labels.push(item.getLastDate().toLocaleString());
+    values.push(item.getRiverLevel());
   }
+  this.lineChartData = { labels, datasets: [{ data: values, label: 'Estação Cais Mauá C6', fill: false, borderColor: '#3e95cd' }] };
+}
+}
